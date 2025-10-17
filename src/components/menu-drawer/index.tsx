@@ -51,67 +51,63 @@ const NestedMenuDrawer = ({ triggerButton, data }: NestedMenuDrawerProps) => {
             <DrawerTitle>Nested Menu Drawer</DrawerTitle>
             <DrawerDescription>A responsive and accessible animated drawer component featuring a nested menu system with smooth transitions, intuitive back navigation, and polished animations for seamless user interaction.</DrawerDescription>
           </DrawerHeader>
-          <div
-            className="h-full flex flex-col gap-2"
-            ref={drawerRef}
-            tabIndex={-1}
-            aria-label="Multi-level drawer"
-          >
-            {history.length > 0 && (
-              <div>
-                <Button
-                  variant={"ghost"}
-                  onClick={goBack}
-                  size={"sm"}
-                  className=""
-                  aria-label="Go back"
-                >
-                  <ChevronLeft className="size-3.5" />
-                  Back
-                </Button>
-              </div>
-            )}
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentMenu.map((item) => item.label).join("-")}
+              custom={direction}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              variants={variants}
+              transition={{ duration: 0.3 }}
+              className="h-full flex flex-col gap-2"
+              ref={drawerRef}
+              tabIndex={-1}
+              aria-label="Multi-level drawer"
+            >
+              {history.length > 0 && (
+                <div>
+                  <Button
+                    variant={"ghost"}
+                    onClick={goBack}
+                    size={"sm"}
+                    aria-label="Go back"
+                  >
+                    <ChevronLeft className="size-3.5" />
+                    Back
+                  </Button>
+                </div>
+              )}
 
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.ul
-                key={currentMenu.map((item) => item.label).join("-")}
-                custom={direction}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                variants={variants}
-                transition={{ duration: 0.3 }}
-                className="space-y-2"
-              >
+              <ul className="space-y-2">
                 {currentMenu.map((item) => (
                   <li key={item.label}>
                     <div
                       onClick={() => item.items && goToMenu(item.items)}
                       className="w-full h-fit cursor-pointer hover:bg-secondary p-2 rounded-sm"
                     >
-
                       <div className="flex gap-2 items-start w-full">
                         {item.icon && <item.icon className="size-4 mt-0.5 shrink-0" />}
-
                         <div className="flex flex-col justify-start w-full">
                           <div className="flex items-center justify-between gap-3 w-full">
                             <h4 className="text-sm font-medium">{item.label}</h4>
-
                             {item.items && item.items.length > 0 && (
                               <ChevronRight className="size-3.5" />
                             )}
                           </div>
                           {item.description && (
-                            <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>
+                            <p className="text-xs text-muted-foreground line-clamp-2">
+                              {item.description}
+                            </p>
                           )}
                         </div>
                       </div>
                     </div>
                   </li>
                 ))}
-              </motion.ul>
-            </AnimatePresence>
-          </div>
+              </ul>
+            </motion.div>
+          </AnimatePresence>
         </DrawerContent>
       </Drawer>
     </>
