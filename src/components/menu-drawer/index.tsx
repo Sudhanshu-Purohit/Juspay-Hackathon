@@ -54,7 +54,7 @@ const NestedMenuDrawer = ({ triggerButton, data }: NestedMenuDrawerProps) => {
     <>
       <div onClick={openDrawer}>{triggerButton}</div>
       <Drawer open={isOpen} onOpenChange={closeDrawer}>
-        <DrawerContent className="mx-2 p-3 overflow-hidden">
+        <DrawerContent className="mx-3 p-3 overflow-hidden data-[vaul-drawer-direction=bottom]:bottom-3 data-[vaul-drawer-direction=bottom]:rounded-t-2xl data-[vaul-drawer-direction=bottom]:rounded-b-2xl">
           <DrawerHeader className="hidden">
             <DrawerTitle>Nested Menu Drawer</DrawerTitle>
             <DrawerDescription>
